@@ -26,10 +26,4 @@ dependencies {
 //        runtime(
 //
 //        )
-//        testCompile {
-//
-//        }
-//        testRuntime(
-//
-//        )
 }

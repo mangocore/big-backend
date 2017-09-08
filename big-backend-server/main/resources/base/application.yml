@@ -13,7 +13,7 @@ server:
   undertow:
     accesslog:
       enabled: true
-      pattern: "%I %q %m %h %a %A %l %u %t '%r' %s %b (%D ms) %U '%{i,Referer}' '%{i,Host}' '%{i,User-Agent}' '%{o,Content-Type}' '%{o,Content-Length}'"
+      pattern: "%t %I %q ‘%{i,X-Real-IP}/%a' %l %u %v '%r' %s '%b/%{o,Content-Length}' '%{o,Content-Type}' '%{i,User-Agent}' '%{i,Referer}'"
       dir: /opt/logs/mangocore/bigbackend/access
       rotate: true
     buffer-size: 1024
