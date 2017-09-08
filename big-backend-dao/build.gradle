@@ -1,0 +1,35 @@
+sourceSets {
+    main {
+        resources {//指定资源目录
+            srcDir "${subprojectPath}${separator}main${separator}resources"
+        }
+    }
+}
+/*依赖*/
+dependencies {
+    compile project(":big-backend-common")
+//        compileOnly(
+//
+//        )
+    compile(
+            //mysql驱动
+            "mysql:mysql-connector-java",
+            "org.springframework.boot:spring-boot-starter-jdbc",
+            "org.springframework.data:spring-data-commons",
+            //mysql数据源＋监控
+            "com.alibaba:druid:1.0.31",
+            //mybatis及对接Spring
+            "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1",
+            //mybatis 分页插件
+            "com.github.pagehelper:pagehelper:5.0.3"
+    )
+//        runtime(
+//
+//        )
+//        testCompile {
+//
+//        }
+//        testRuntime(
+//
+//        )
+}

@@ -1,0 +1,161 @@
+buildscript {
+    ext {
+        springBootVersion = "1.5.6.RELEASE"
+        gradleDockerVersion = "1.2"
+
+        //profile
+        if (project.hasProperty("projectEnv")) {
+            projectEnv = project["projectEnv"]
+        } else {
+            projectEnv = "dev"
+        }
+        println "project environment:" + projectEnv
+    }
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath(
+                "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
+                "se.transmode.gradle:gradle-docker:${gradleDockerVersion}"
+        )
+    }
+}
+
+//配置所有的子Project的公共部分（不包含root Project）
+subprojects {
+    ext {
+        subprojectPath = project.getProjectDir().getPath();
+        separator = File.separator
+    }
+
+    apply plugin: "java"
+    apply plugin: "idea"
+    apply plugin: "org.springframework.boot"
+    //默认module 不创建bootRepackage，不执行bootRun
+    bootRepackage.enabled = false
+    bootRun.enabled = false
+
+    group "com.mangocore"
+    version "1.0.0-SNAPSHOT"
+    description project.name
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    /*解决设置版本不起作用问题*/
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8// 设置 JDK 版本
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+    }
+
+    sourceSets {
+        main {
+            java {//指定java代码目录
+                srcDir "${subprojectPath}${separator}main${separator}java"
+                exclude "resources${separator}**"
+            }
+        }
+    }
+
+    /*依赖排除*/
+    configurations {
+        //排除spring-boot-starter-web引入
+        all*.exclude module: "spring-boot-starter-tomcat"
+        all*.exclude module: "spring-boot-starter-logging"
+        all*.exclude module: "tomcat-jdbc"
+        all*.exclude group: "log4j", module: "log4j"
+        all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+        all*.exclude group: "org.slf4j", module: "slf4j-jdk14"
+        all*.exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
+        all*.exclude group: "org.slf4j", module: "slf4j-jcl"
+        all*.exclude group: "ch.qos.logback", module: "logback-classic"
+        all*.exclude group: "org.codehaus.jackson"
+    }
+
+    /*依赖*/
+    dependencies {
+        //compile 编译范围依赖在所有的classpath中可用，同时它们也会被打包。
+        //compileOnly 适用于编译期需要而打包时不需要的情况，java插件提供（gradle2.12时短暂的叫provided）
+        //providedCompile 编译、测试阶段需要依赖此类jar包，而运行阶段容器已经提供了相应的支持，所以无需将这些jar包打入war包，war插件提供（如：Servlet）
+        //providedRuntime 同proiveCompile类似。运行、测试的时候不需要，运行时需要，war插件提供
+        //runtime 运行、测试时所需的依赖,但编译时不需要。默认情况下，还包括编译时的依赖。
+        //testCompile  编译项目的测试源所需的依赖。默认情况下，还包括产品编译类和编译时的依赖。
+        //testRuntime  运行测试所需的依赖。默认情况下，还包括 编译，运行时和测试编译的依赖。
+        compile(
+                //防止包冲突
+                "org.slf4j:slf4j-api:1.7.25",
+                "cglib:cglib:3.2.5",
+                //JSON方案是原生JSON+fastjson,注意别使用Gson及jackson,Spring框架默认使用fastjson
+                "org.json:json:20170516",
+                "com.alibaba:fastjson:1.2.38",
+
+                //日志方案选择slf4j与log4j2集成,注意别使用commons-logging与jdk-logging、log4j1、logback的集成原理
+                "com.lmax:disruptor:3.3.6",
+                "org.apache.logging.log4j:log4j-web:2.7",
+
+                "org.springframework.boot:spring-boot-starter-web",
+                "org.springframework.boot:spring-boot-starter-log4j2",
+                "org.springframework.boot:spring-boot-starter-undertow",
+
+                "org.springframework.boot:spring-boot-starter-actuator",
+                "org.springframework.boot:spring-boot-actuator-docs",
+                "org.springframework.boot:spring-boot-starter-hateoas",
+                "org.springframework.boot:spring-boot-starter-aop",
+
+//                "org.springframework.boot:spring-boot-starter-security",
+//                "org.springframework.boot:spring-boot-starter-validation",
+
+                "org.springframework.boot:spring-boot-starter-thymeleaf",
+                //重试
+                "org.springframework.retry:spring-retry",
+                //httpclient
+                "com.netflix.feign:feign-httpclient:8.18.0",
+                //apache-Commons系列
+                "org.apache.commons:commons-lang3:3.6",
+                "org.apache.commons:commons-collections4:4.1",
+                //commons系列
+                "commons-fileupload:commons-fileupload:1.3.3",
+                "commons-codec:commons-codec:1.10",
+                "commons-io:commons-io:2.5",
+                //excel处理
+                "javax.xml.bind:jaxb-api:2.3.0",
+                //google的guava
+                "com.google.guava:guava:23.0"
+        )
+        compileOnly(
+                "org.projectlombok:lombok"
+        )
+        runtime(
+                "org.springframework.boot:spring-boot-devtools"
+        )
+        testCompile(
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.springframework.security:spring-security-test"
+        )
+    }
+
+    //强制使用gradle
+    task wrapper(type: Wrapper) {
+        gradleVersion = "4.1"
+    }
+    //增量编译
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+    //不自动下载依赖源码和javadoc
+    idea {
+        module {
+            downloadJavadoc = false
+            downloadSources = false
+        }
+    }
+}

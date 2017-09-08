@@ -1,0 +1,13 @@
+//依赖
+dependencies {
+    compile project(":big-backend-biz")
+//        compileOnly(
+//
+//        )
+//        compile(
+//
+//        )
+//        runtime(
+//
+//        )
+}

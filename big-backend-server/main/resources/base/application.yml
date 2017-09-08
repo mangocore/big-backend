@@ -1,0 +1,24 @@
+logging:
+  config: classpath:log4j2.xml
+management:
+  context-path: /projectManage
+  security:
+    enabled: true
+spring:
+  profiles:
+    active: dev
+server:
+  port: 29368
+  context-path: /
+  undertow:
+    accesslog:
+      enabled: true
+      pattern: "%I %q %m %h %a %A %l %u %t '%r' %s %b (%D ms) %U '%{i,Referer}' '%{i,Host}' '%{i,User-Agent}' '%{o,Content-Type}' '%{o,Content-Length}'"
+      dir: /opt/logs/mangocore/bigbackend/access
+      rotate: true
+    buffer-size: 1024
+    direct-buffers: true
+    io-threads: 2
+    worker-threads: 20
+
+
