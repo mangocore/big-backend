@@ -5,4 +5,4 @@ VOLUME /tmp
 ADD big-backend.jar big-backend.jar
 ENV JAVA_OPTS='-server -Duser.timezone=Asia/Shanghai'
 EXPOSE 29368
-ENTRYPOINT ["java","-jar","/big-backend.jar"]
+ENTRYPOINT ["java","-Dfile.encoding=UTF-8","-Dsun.jnu.encoding=UTF-8","-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector","-Djava.io.tmpdir=/tmp","-Djava.net.preferIPv6Addresses=false","-server","-Xms1024M","-Xmx1024M","-Xmn256M","-XX:ReservedCodeCacheSize=128M","-XX:InitialCodeCacheSize=128M","-XX:SurvivorRatio=8","-XX:+DisableExplicitGC","-XX:+UseConcMarkSweepGC","-XX:CMSFullGCsBeforeCompaction=0","-XX:+UseCMSCompactAtFullCollection","-XX:CMSInitiatingOccupancyFraction=80","-XX:+HeapDumpOnOutOfMemoryError","-jar","big-backend.jar","--spring.profiles.active=prod"]
