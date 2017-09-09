@@ -158,4 +158,8 @@ subprojects {
             downloadSources = false
         }
     }
+    //清除out目录
+    clean {
+        delete file("${subprojectPath}${separator}out")
+    }
 }
