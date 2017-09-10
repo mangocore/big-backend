@@ -1,16 +1,19 @@
 package com.mangocore.api;
 
-import com.mangocore.api.response.CommonResponse;
+import com.google.common.collect.Maps;
+import com.mangocore.biz.service.SimpleService;
+import com.mangocore.common.response.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * 未授权认证测试接口
@@ -20,17 +23,27 @@ import java.util.Locale;
 @RestController
 @RequestMapping("/test")
 public class UnAuthTestController {
-    private static final String activeStatus = "当前环境：%s，服务器时区：%s";
+
     @Value("${spring.profiles.active}")
     private String projectEnv;
+
+    @Autowired
+    private SimpleService simpleService;
 
     @GetMapping("/status/active")
     public CommonResponse activeStatus() {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        ZoneId zoneId = zonedDateTime.getZone();
-        String datetime = zoneId.getDisplayName(TextStyle.FULL, Locale.ROOT)
-                + "(" + zoneId.getDisplayName(TextStyle.SHORT, Locale.ROOT) + ")  " + zonedDateTime;
+        String datetime = zonedDateTime.getZone().getDisplayName(TextStyle.FULL, Locale.ROOT)
+                + "(" + zonedDateTime.getZone().getDisplayName(TextStyle.SHORT, Locale.ROOT) + ")  "
+                + zonedDateTime;
 
-        return CommonResponse.createSuccess(String.format(activeStatus, projectEnv, datetime));
+
+        Map<String, Object> objectMap = Maps.newHashMap();
+        objectMap.put("当前环境", projectEnv);
+        objectMap.put("服务器时区", datetime);
+        objectMap.put("数据库连接测试", simpleService.selectSimpleDomainByAll());
+        objectMap.put("数据库日期", simpleService.selectSysDate());
+        return CommonResponse.createSuccess(objectMap);
     }
+
 }

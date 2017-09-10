@@ -1,3 +1,6 @@
+context:
+  listener:
+    classes: com.mangocore.server.component.ApplicationEventListener
 logging:
   config: classpath:log4j2.xml
 management:
@@ -20,5 +23,15 @@ server:
     direct-buffers: true
     io-threads: 2
     worker-threads: 20
-
+  session:
+    timeout: 60  # session最大超时时间(分钟)，默认为30
+  error:
+    path: /error  # 错误页，指定发生错误时，跳转的URL
+security:
+  basic:
+    enabled: true
+    path: /AppManage
+  user:
+    name: mangocore
+    password: Z##w$@*&wVGGaZ^uD5tL$n^75LEf6o
 
