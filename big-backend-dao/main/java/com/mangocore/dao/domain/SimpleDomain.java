@@ -1,5 +1,6 @@
 package com.mangocore.dao.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,8 @@ import java.util.Date;
  */
 @Data
 public class SimpleDomain {
+    private long id;
     private Date createtime;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date updatetime;
 }
