@@ -3,9 +3,13 @@ dependencies {
 //        compileOnly(
 //
 //        )
-//        compile(
-//
-//        )
+    compile(
+            //重试
+            "org.springframework.retry:spring-retry",
+            //httpclient
+            "com.netflix.feign:feign-httpclient:8.18.0"
+
+    )
 //        runtime(
 //
 //        )

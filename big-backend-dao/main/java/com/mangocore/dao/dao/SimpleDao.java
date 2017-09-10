@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,10 +15,14 @@ import java.util.List;
 @Slf4j
 @Component
 public class SimpleDao {
-//    @Resource
-//    private SimpleMapper simpleMapper;
+    @Resource
+    private SimpleMapper simpleMapper;
 
-//    public List<SimpleDomain> selectSimpleDomainByAll() {
-//        return simpleMapper.selectSimpleDomainByAll();
-//    }
+    public List<SimpleDomain> selectSimpleDomainByAll() {
+        return simpleMapper.selectSimpleDomainByAll();
+    }
+
+    public Date selectSysDate(){
+        return simpleMapper.selectSysDate();
+    }
 }

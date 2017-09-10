@@ -1,3 +1,6 @@
+context:
+  listener:
+    classes: com.mangocore.server.component.ApplicationEventListener
 logging:
   config: classpath:log4j2.xml
 management:
@@ -13,12 +16,22 @@ server:
   undertow:
     accesslog:
       enabled: true
-      pattern: "%I %q %m %h %a %A %l %u %t '%r' %s %b (%D ms) %U '%{i,Referer}' '%{i,Host}' '%{i,User-Agent}' '%{o,Content-Type}' '%{o,Content-Length}'"
+      pattern: "%t %I %q ‘%{i,X-Real-IP}/%a' %l %u %v '%r' %s '%b/%{o,Content-Length}' '%{o,Content-Type}' '%{i,User-Agent}' '%{i,Referer}'"
       dir: /opt/logs/mangocore/bigbackend/access
       rotate: true
     buffer-size: 1024
     direct-buffers: true
     io-threads: 2
     worker-threads: 20
-
+  session:
+    timeout: 60  # session最大超时时间(分钟)，默认为30
+  error:
+    path: /error  # 错误页，指定发生错误时，跳转的URL
+security:
+  basic:
+    enabled: true
+    path: /AppManage
+  user:
+    name: mangocore
+    password: Z##w$@*&wVGGaZ^uD5tL$n^75LEf6o
 

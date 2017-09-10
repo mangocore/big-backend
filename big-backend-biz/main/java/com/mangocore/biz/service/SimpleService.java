@@ -1,7 +1,13 @@
 package com.mangocore.biz.service;
 
+import com.mangocore.dao.dao.SimpleDao;
+import com.mangocore.dao.domain.SimpleDomain;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by notreami on 17/6/24.
@@ -9,25 +15,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class SimpleService {
-//    @Resource
-//    private SimpleDao simpleDao;
-//
-//    public List<SimpleDomain> querySimpleDomainByAll() {
-//        return simpleDao.selectSimpleDomainByAll();
-//    }
-//
-//    public CommonResult getStatus() {
-//        SysStatus sysStatus = new SysStatus();
-//
-//        sysStatus.setEngineering(SysUtils.getProjectName());
-//
-//        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-//        ZoneId zoneId = zonedDateTime.getZone();
-//        sysStatus.setDatetime(zoneId.getDisplayName(TextStyle.FULL, Locale.ROOT)
-//                + "(" + zoneId.getDisplayName(TextStyle.SHORT, Locale.ROOT) + ")  " + zonedDateTime);
-//
-//        sysStatus.setJavaVersion(System.getProperty("java.version"));
-//
-//        return CommonResult.get(CommonResultEnum.OK, sysStatus);
-//    }
+    @Resource
+    private SimpleDao simpleDao;
+
+    public List<SimpleDomain> selectSimpleDomainByAll() {
+        return simpleDao.selectSimpleDomainByAll();
+    }
+
+    public Date selectSysDate() {
+        return simpleDao.selectSysDate();
+    }
 }

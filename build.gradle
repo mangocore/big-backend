@@ -101,10 +101,7 @@ subprojects {
                 //日志方案选择slf4j与log4j2集成,注意别使用commons-logging与jdk-logging、log4j1、logback的集成原理
                 "com.lmax:disruptor:3.3.6",
                 "org.apache.logging.log4j:log4j-web:2.7",
-
-                "org.springframework.boot:spring-boot-starter-web",
                 "org.springframework.boot:spring-boot-starter-log4j2",
-                "org.springframework.boot:spring-boot-starter-undertow",
 
                 "org.springframework.boot:spring-boot-starter-actuator",
                 "org.springframework.boot:spring-boot-actuator-docs",
@@ -114,11 +111,7 @@ subprojects {
 //                "org.springframework.boot:spring-boot-starter-security",
 //                "org.springframework.boot:spring-boot-starter-validation",
 
-                "org.springframework.boot:spring-boot-starter-thymeleaf",
-                //重试
-                "org.springframework.retry:spring-retry",
-                //httpclient
-                "com.netflix.feign:feign-httpclient:8.18.0",
+
                 //apache-Commons系列
                 "org.apache.commons:commons-lang3:3.6",
                 "org.apache.commons:commons-collections4:4.1",
@@ -137,10 +130,6 @@ subprojects {
         runtime(
                 "org.springframework.boot:spring-boot-devtools"
         )
-        testCompile(
-                "org.springframework.boot:spring-boot-starter-test",
-                "org.springframework.security:spring-security-test"
-        )
     }
 
     //强制使用gradle
@@ -157,5 +146,9 @@ subprojects {
             downloadJavadoc = false
             downloadSources = false
         }
+    }
+    //清除out目录
+    clean {
+        delete file("${subprojectPath}${separator}out")
     }
 }

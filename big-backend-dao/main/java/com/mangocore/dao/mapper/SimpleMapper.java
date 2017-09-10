@@ -5,6 +5,7 @@ import com.mangocore.dao.domain.SimpleDomain;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
 @Repository
 public interface SimpleMapper {
 
-//    @Select("select * from `fewok`.`simple_info`  limit 0,1")
-//    List<SimpleDomain> selectSimpleDomainByAll();
+    List<SimpleDomain> selectSimpleDomainByAll();
+
+    @Select("SELECT SYSDATE() FROM DUAL")
+    Date selectSysDate();
 }

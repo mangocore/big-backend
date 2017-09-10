@@ -4,9 +4,11 @@ dependencies {
 //        compileOnly(
 //
 //        )
-//        compile(
-//
-//        )
+    compile(
+            "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-undertow",
+            "org.springframework.boot:spring-boot-starter-thymeleaf"
+    )
 //        runtime(
 //
 //        )
