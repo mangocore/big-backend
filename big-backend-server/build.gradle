@@ -23,16 +23,12 @@ sourceSets {
 /*依赖*/
 dependencies {
     compile project(":big-backend-api")
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude(module: "spring-boot-starter-tomcat")
-        exclude(module: "spring-boot-starter-logging")
-    }
 //        compileOnly(
 //
 //        )
-//        compile(
+//    compile(
 //
-//        )
+//    )
 //        runtime(
 //
 //        )

@@ -1,4 +1,4 @@
-package com.mangocore.test;
+package com.mangocore.test.operation;
 
 import com.mangocore.biz.service.SimpleService;
 import groovy.util.logging.Slf4j;
