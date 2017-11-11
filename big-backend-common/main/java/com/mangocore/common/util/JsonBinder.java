@@ -7,6 +7,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 
 import java.nio.charset.StandardCharsets;
@@ -29,8 +30,8 @@ public class JsonBinder {
                 SerializerFeature.QuoteFieldNames,//输出key时使用双引号
 //                SerializerFeature.UseSingleQuotes,//输出key时使用单引号
                 SerializerFeature.WriteMapNullValue,//Map值为null也输出
-                SerializerFeature.WriteEnumUsingToString,//用枚举toString()值输出
-//                SerializerFeature.WriteEnumUsingName,//用枚举name()输出
+//                SerializerFeature.WriteEnumUsingToString,//用枚举toString()值输出
+                SerializerFeature.WriteEnumUsingName,//用枚举name()输出
 //                SerializerFeature.UseISO8601DateFormat,//Date使用ISO8601格式输出
                 SerializerFeature.WriteNullListAsEmpty,//List字段如果为null,输出为[],而非null
                 SerializerFeature.WriteNullStringAsEmpty,//字符类型字段如果为null,输出为”“,而非null
@@ -43,7 +44,7 @@ public class JsonBinder {
                 SerializerFeature.DisableCircularReferenceDetect, //消除对同一对象循环引用的问题
                 SerializerFeature.WriteSlashAsSpecial,//对斜杠’/’进行转义
 //                SerializerFeature.BrowserCompatible,//将中文都会序列化，字节数会多一些，但是能兼容IE 6
-                SerializerFeature.WriteDateUseDateFormat,//全局修改日期格式  yyyy-MM-dd
+                SerializerFeature.WriteDateUseDateFormat,//全局修改日期格式  yyyy-MM-dd HH:mm:ss
                 SerializerFeature.NotWriteRootClassName,//
 //                SerializerFeature.BeanToArray,//将对象转为array输出
 //                SerializerFeature.WriteNonStringKeyAsString,//将非字符串类型的key当成字符串来处理
@@ -129,10 +130,10 @@ public class JsonBinder {
      */
     public static String toJSONString(Object object) {
         try {
-            return JSON.toJSONString(object);
+            return StringUtils.trimToEmpty(JSON.toJSONString(object, fastJsonConfig.getSerializerFeatures()));
         } catch (Exception e) {
             log.error("Obj转json异常 e=", e);
         }
-        return null;
+        return StringUtils.EMPTY;
     }
 }
