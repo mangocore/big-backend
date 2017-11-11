@@ -1,6 +1,6 @@
 context:
   listener:
-    classes: com.mangocore.server.component.ApplicationEventListener
+    classes: com.mangocore.common.component.ApplicationEventListener
 
 logging:
   config: classpath:log4j2.xml

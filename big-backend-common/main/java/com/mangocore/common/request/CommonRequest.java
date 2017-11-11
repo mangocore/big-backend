@@ -1,7 +1,7 @@
 package com.mangocore.common.request;
 
 import com.mangocore.common.common.ClientInfo;
-import com.mangocore.common.common.ObjectId;
+import com.mangocore.common.common.BaseInfo;
 import com.mangocore.common.common.OperatorEnum;
 import com.mangocore.common.common.ProcessType;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
  * Created by notreami on 17/9/8.
  */
 @Data
-public class CommonRequest<T extends ObjectId> {
+public class CommonRequest<T extends BaseInfo> {
     /**
      * 调用方信息
      */

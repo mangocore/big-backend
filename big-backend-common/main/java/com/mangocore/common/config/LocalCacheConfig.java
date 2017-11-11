@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * Created by notreami on 17/9/13.
  */
 @Configuration
+@EnableCaching
 public class LocalCacheConfig {
 
     @Getter

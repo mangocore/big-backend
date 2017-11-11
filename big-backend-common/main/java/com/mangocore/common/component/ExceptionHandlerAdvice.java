@@ -1,4 +1,4 @@
-package com.mangocore.server.component;
+package com.mangocore.common.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

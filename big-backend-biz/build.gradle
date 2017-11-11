@@ -1,6 +1,6 @@
 //依赖
 dependencies {
-    compile project(":big-backend-dao")
+    compile project(":big-backend-data")
 //        compileOnly(
 //
 //        )

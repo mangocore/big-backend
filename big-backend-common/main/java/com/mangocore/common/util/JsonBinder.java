@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -61,7 +61,7 @@ public class JsonBinder {
 
 
         fastJsonHttpMessageConverter.setSupportedMediaTypes(supportedMediaTypes);
-        fastJsonHttpMessageConverter.setDefaultCharset(Charset.forName("UTF-8"));
+        fastJsonHttpMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
         //在转换器中添加配置信息
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
     }

@@ -8,7 +8,7 @@ buildscript {
         }
         println "project environment:" + projectEnv
         //插件版本
-        springBootVersion = "1.5.7.RELEASE"
+        springBootVersion = "1.5.8.RELEASE"
         gradleDockerVersion = "1.2"
 
     }
@@ -97,10 +97,10 @@ subprojects {
                 "cglib:cglib:3.2.5",
                 //JSON方案是原生JSON+fastjson,注意别使用Gson及jackson,Spring框架默认使用fastjson
                 "org.json:json:20170516",
-                "com.alibaba:fastjson:1.2.38",
+                "com.alibaba:fastjson:1.2.39",
 
                 //日志方案选择slf4j与log4j2集成,注意别使用commons-logging与jdk-logging、log4j1、logback的集成原理
-                "com.lmax:disruptor:3.3.6",
+                "com.lmax:disruptor:3.3.7",
                 "org.apache.logging.log4j:log4j-web:2.7",
                 "org.springframework.boot:spring-boot-starter-log4j2",
 
@@ -127,7 +127,7 @@ subprojects {
 
     //强制使用gradle
     task wrapper(type: Wrapper) {
-        gradleVersion = "4.1"
+        gradleVersion = "4.3.1"
     }
     //增量编译
     tasks.withType(JavaCompile) {

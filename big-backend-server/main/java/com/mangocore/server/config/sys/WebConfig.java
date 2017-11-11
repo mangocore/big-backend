@@ -15,7 +15,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -37,7 +37,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         supportedMediaTypes.add(MediaType.ALL);
 
         StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
-        stringConverter.setDefaultCharset(Charset.forName("UTF-8"));
+        stringConverter.setDefaultCharset(StandardCharsets.UTF_8);
         stringConverter.setSupportedMediaTypes(supportedMediaTypes);
         stringConverter.setWriteAcceptCharset(false);
         return stringConverter;
@@ -90,7 +90,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         corsConfiguration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration); // 4
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }
 
