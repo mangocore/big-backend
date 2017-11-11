@@ -130,7 +130,7 @@ public class JsonBinder {
      */
     public static String toJSONString(Object object) {
         try {
-            return StringUtils.trimToEmpty(JSON.toJSONString(object, fastJsonConfig.getSerializerFeatures()));
+            return StringUtils.trimToEmpty(JSON.toJSONString(object));
         } catch (Exception e) {
             log.error("Obj转json异常 e=", e);
         }
