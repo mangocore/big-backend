@@ -126,13 +126,4 @@ public class IdWorker {
     private long timeGen() {
         return System.currentTimeMillis();
     }
-
-    public static void main(String[] args) {
-        IdWorker.getInstance(0, 0);
-        IdWorker snowFlake = IdWorker.getIdWorker();
-        for (int i = 0; i < 100; i++) {
-            long id = snowFlake.nextId();
-            System.out.println(id);
-        }
-    }
 }
