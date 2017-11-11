@@ -137,7 +137,7 @@ subprojects {
     idea {
         module {
             downloadJavadoc = false
-            downloadSources = false
+//            downloadSources = false
         }
     }
     //清除out目录

@@ -60,7 +60,8 @@ public class BAInterceptor extends HandlerInterceptorAdapter {
         log.warn("BA failed: " + basicAuthData + " " + method + " " + uri);
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        response.getWriter().print(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.PROCESS_INVALID)));
+        response.getWriter().write(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.STATUS_INFO_ACCESS)));
+        response.getWriter().flush();
         response.getWriter().close();
         return false;
     }

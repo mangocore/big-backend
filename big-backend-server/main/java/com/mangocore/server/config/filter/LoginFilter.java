@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mangocore.common.common.ErrorInfo;
 import com.mangocore.common.response.CommonResponse;
 import com.mangocore.common.util.JsonBinder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,7 +29,7 @@ import java.util.List;
  * 登陆成功，登陆失败（锁定用户）
  * Created by notreami on 17/10/29.
  */
-public class LoginFilter  extends AbstractAuthenticationProcessingFilter {
+public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public LoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
@@ -39,8 +40,8 @@ public class LoginFilter  extends AbstractAuthenticationProcessingFilter {
 //       throw new BadCredentialsException("");
 //        return null;
         List<GrantedAuthority> authorities = Lists.newArrayList();
-        authorities.add( new SimpleGrantedAuthority("ROLE_ADMIN") );
-        authorities.add( new SimpleGrantedAuthority("AUTH_WRITE") );
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        authorities.add(new SimpleGrantedAuthority("AUTH_WRITE"));
         // 生成令牌
         Authentication authentication = new PreAuthenticatedAuthenticationToken("admin", "123456", authorities);
         return authentication;
@@ -53,12 +54,10 @@ public class LoginFilter  extends AbstractAuthenticationProcessingFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        CommonResponse commonResponse = CommonResponse.createError(ErrorInfo.STATUS_INVALID);
-
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        PrintWriter printWriter = response.getWriter();
-        printWriter.write(JsonBinder.toJSONString(commonResponse));
-        printWriter.flush();
-        printWriter.close();
+        response.getWriter().write(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.STATUS_INFO_AUTH)));
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }

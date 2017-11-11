@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对请求进行认证
                 .authorizeRequests()
                 // 所有 / 的所有请求 都放行
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 // 所有 /login 的POST请求 都放行
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 // 权限检查
@@ -50,14 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 添加一个过滤器 所有访问 /login 的请求交给 JWTLoginFilter 来处理 这个类处理所有的JWT相关内容
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 // 添加一个过滤器验证其他请求的Token是否合法
-                .addFilterBefore(getAuthenticationFilter(), AuthenticationFilter.class)
+                .addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 //异常抛出，当用户请求的操作需要登录时，将抛出 AuthenticationException 异常
                 .exceptionHandling()
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())//需要登陆
                 .accessDeniedHandler(new RestAccessDeniedHandler());//没有授权
 
         // 取消安全报文头
-        httpSecurity.headers().disable();
+//        httpSecurity.headers().disable();
+//        httpSecurity.headers();
     }
 
     @Bean
