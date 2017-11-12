@@ -1,6 +1,6 @@
 package com.mangocore.test.operation;
 
-import com.mangocore.common.util.BasicAuth;
+import com.mangocore.data.util.BasicAuth;
 
 /**
  * Created by notreami on 17/9/15.

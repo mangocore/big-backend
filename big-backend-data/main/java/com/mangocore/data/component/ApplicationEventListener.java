@@ -1,4 +1,4 @@
-package com.mangocore.common.component;
+package com.mangocore.data.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;

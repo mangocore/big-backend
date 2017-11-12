@@ -2,7 +2,7 @@ package com.mangocore.server.config.sys;
 
 import com.mangocore.common.common.ErrorInfo;
 import com.mangocore.common.response.CommonResponse;
-import com.mangocore.common.util.JsonBinder;
+import com.mangocore.data.util.JsonBinder;
 import com.mangocore.server.config.filter.AuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

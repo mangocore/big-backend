@@ -1,6 +1,6 @@
 package com.mangocore;
 
-import com.mangocore.common.util.IdWorker;
+import com.mangocore.data.util.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

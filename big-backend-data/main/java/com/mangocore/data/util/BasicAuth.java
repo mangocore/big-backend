@@ -1,4 +1,4 @@
-package com.mangocore.common.util;
+package com.mangocore.data.util;
 
 import lombok.Getter;
 

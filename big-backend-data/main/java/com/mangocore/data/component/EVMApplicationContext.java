@@ -1,4 +1,4 @@
-package com.mangocore.common.component;
+package com.mangocore.data.component;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -1,4 +1,4 @@
-package com.mangocore.common.util;
+package com.mangocore.data.util;
 
 /**
  * twitter的snowflake算法 -- java实现<br>

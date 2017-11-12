@@ -1,4 +1,4 @@
-package com.mangocore.data.domain;
+package com.mangocore.data.database.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

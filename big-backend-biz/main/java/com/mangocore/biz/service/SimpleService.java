@@ -1,7 +1,7 @@
 package com.mangocore.biz.service;
 
-import com.mangocore.data.dao.SimpleDao;
-import com.mangocore.data.domain.SimpleDomain;
+import com.mangocore.data.database.dao.SimpleDao;
+import com.mangocore.data.database.domain.SimpleDomain;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

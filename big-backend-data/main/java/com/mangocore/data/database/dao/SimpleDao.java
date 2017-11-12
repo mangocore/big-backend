@@ -1,7 +1,7 @@
-package com.mangocore.data.dao;
+package com.mangocore.data.database.dao;
 
-import com.mangocore.data.domain.SimpleDomain;
-import com.mangocore.data.mapper.SimpleMapper;
+import com.mangocore.data.database.domain.SimpleDomain;
+import com.mangocore.data.database.mapper.SimpleMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

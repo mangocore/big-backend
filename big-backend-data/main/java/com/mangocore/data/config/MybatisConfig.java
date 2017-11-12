@@ -1,7 +1,7 @@
 package com.mangocore.data.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.mangocore.data.domain.SimpleDomain;
+import com.mangocore.data.database.domain.SimpleDomain;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -23,7 +23,7 @@ import java.sql.SQLException;
  * Created by notreami on 16/8/15.
  */
 @Configuration
-@MapperScan(sqlSessionTemplateRef = "sqlSessionTemplate", basePackages = "com.mangocore.data.mapper")
+@MapperScan(sqlSessionTemplateRef = "sqlSessionTemplate", basePackages = "com.mangocore.data.database.mapper")
 public class MybatisConfig {
     //数据库连接相关的参数：
     @Value("${custom.datasource.name}")

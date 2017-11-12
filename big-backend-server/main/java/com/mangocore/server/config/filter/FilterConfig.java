@@ -2,7 +2,7 @@ package com.mangocore.server.config.filter;
 
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
-import com.mangocore.data.mapper.SimpleMapper;
+import com.mangocore.data.database.mapper.SimpleMapper;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;

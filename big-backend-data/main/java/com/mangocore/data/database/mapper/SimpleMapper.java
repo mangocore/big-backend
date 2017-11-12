@@ -1,7 +1,7 @@
-package com.mangocore.data.mapper;
+package com.mangocore.data.database.mapper;
 
 
-import com.mangocore.data.domain.SimpleDomain;
+import com.mangocore.data.database.domain.SimpleDomain;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 

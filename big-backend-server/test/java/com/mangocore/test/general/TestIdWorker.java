@@ -1,6 +1,6 @@
 package com.mangocore.test.general;
 
-import com.mangocore.common.util.IdWorker;
+import com.mangocore.data.util.IdWorker;
 
 /**
  * 唯一id生成器

@@ -1,4 +1,4 @@
-package com.mangocore.common.config;
+package com.mangocore.data.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.collect.Lists;

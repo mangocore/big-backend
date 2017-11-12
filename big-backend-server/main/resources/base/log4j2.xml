@@ -77,7 +77,7 @@
             <AppenderRef ref="errorFile" level="WARN"/>
             <AppenderRef ref="fatalFile" level="FATAL"/>
         </AsyncRoot>
-        <Logger name="com.mangocore.data.mapper" level="TRACE" includeLocation="true"
+        <Logger name="com.mangocore.data.database.mapper" level="TRACE" includeLocation="true"
                 additivity="false">
             <AppenderRef ref="consolePrint"/>
         </Logger>

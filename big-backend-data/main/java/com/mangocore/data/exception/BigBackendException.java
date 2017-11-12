@@ -1,4 +1,4 @@
-package com.mangocore.common.exception;
+package com.mangocore.data.exception;
 
 /**
  * Created by notreami on 17/9/10.

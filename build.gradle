@@ -95,9 +95,7 @@ subprojects {
                 //防止包冲突
                 "org.slf4j:slf4j-api:1.7.25",
                 "cglib:cglib:3.2.5",
-                //JSON方案是原生JSON+fastjson,注意别使用Gson及jackson,Spring框架默认使用fastjson
                 "org.json:json:20170516",
-                "com.alibaba:fastjson:1.2.39",
 
                 //日志方案选择slf4j与log4j2集成,注意别使用commons-logging与jdk-logging、log4j1、logback的集成原理
                 "com.lmax:disruptor:3.3.7",
@@ -105,7 +103,6 @@ subprojects {
                 "org.springframework.boot:spring-boot-starter-log4j2",
 
                 "org.springframework.boot:spring-boot-starter-actuator",
-//                "org.springframework.boot:spring-boot-actuator-docs",
                 "org.springframework.boot:spring-boot-starter-hateoas",
                 "org.springframework.boot:spring-boot-starter-aop",
 

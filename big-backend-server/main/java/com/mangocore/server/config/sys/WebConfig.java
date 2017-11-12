@@ -1,7 +1,7 @@
 package com.mangocore.server.config.sys;
 
 import com.google.common.collect.Lists;
-import com.mangocore.common.util.JsonBinder;
+import com.mangocore.data.util.JsonBinder;
 import com.mangocore.server.config.filter.BAInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
