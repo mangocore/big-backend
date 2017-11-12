@@ -31,7 +31,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class BigBackendApplication {
 
     public static void main(String[] args) {
-        IdWorker.getInstance(0, 0);//初始化随即生成器
+        IdWorker.getInstance(0, 0);//初始化唯一id生成器
         SpringApplication.run(BigBackendApplication.class, args);
     }
 }

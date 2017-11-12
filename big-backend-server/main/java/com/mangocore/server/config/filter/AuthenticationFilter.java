@@ -1,6 +1,7 @@
 package com.mangocore.server.config.filter;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,15 +24,21 @@ import java.util.List;
 public class AuthenticationFilter  extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest)request);
+        final String path = ((HttpServletRequest)servletRequest).getRequestURI();
 
-        List<GrantedAuthority> authorities = Lists.newArrayList();
-        authorities.add( new SimpleGrantedAuthority("ROLE_ADMIN") );
-        authorities.add( new SimpleGrantedAuthority("AUTH_WRITE") );
-        // 生成令牌
-        Authentication authentication = new PreAuthenticatedAuthenticationToken("admin", "123456", authorities);
+        if (StringUtils.startsWith(path, "/api/")) {
+            //        Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest)request);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            List<GrantedAuthority> authorities = Lists.newArrayList();
+            authorities.add( new SimpleGrantedAuthority("ROLE_ADMIN") );
+            authorities.add( new SimpleGrantedAuthority("AUTH_WRITE") );
+            // 生成令牌
+            Authentication authentication = new PreAuthenticatedAuthenticationToken("admin", "123456", authorities);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+
+
         filterChain.doFilter(servletRequest,servletResponse);
     }
 }
