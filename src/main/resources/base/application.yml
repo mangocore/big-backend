@@ -1,0 +1,48 @@
+context:
+  listener:
+    classes: com.mangocore.data.component.ApplicationEventListener
+
+logging:
+  config: classpath:log4j2.xml
+
+management:
+  context-path: /projectManage
+  security:
+    enabled: true
+
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: true
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+  cache:
+    type: caffeine
+
+server:
+  port: 29368
+  context-path: /
+  undertow:
+    accesslog:
+      enabled: true
+      pattern: "%t %I %q ‘%{i,X-Real-IP}/%a' %l %u %v '%r' %s '%b/%{o,Content-Length}' '%{o,Content-Type}' '%{i,User-Agent}' '%{i,Referer}'"
+      dir: /opt/logs/mangocore/bigbackend/access
+      rotate: true
+    buffer-size: 1024
+    direct-buffers: true
+    io-threads: 2
+    worker-threads: 20
+  session:
+    timeout: 60  # session最大超时时间(分钟)，默认为30
+  error:
+    path: /error  # 错误页，指定发生错误时，跳转的URL
+
+security:
+  basic:
+    enabled: true
+    path: /AppManage
+  user:
+    name: mangocore
+    password: Z##w$@*&wVGGaZ^uD5tL$n^75LEf6o

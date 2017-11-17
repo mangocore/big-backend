@@ -1,0 +1,225 @@
+buildscript {
+    ext {
+        rootProjectPath = project.getRootDir().getPath();
+        separator = File.separator
+        //profile
+        if (project.hasProperty("projectEnv")) {
+            projectEnv = project["projectEnv"]
+        } else {
+            projectEnv = "dev"
+        }
+        println "project environment:" + projectEnv
+        //插件版本
+        springBootVersion = "1.5.8.RELEASE"
+        gradleDockerVersion = "1.2"
+
+    }
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath(
+                "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
+                "se.transmode.gradle:gradle-docker:${gradleDockerVersion}"
+        )
+    }
+}
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "org.springframework.boot"
+apply plugin: "docker"
+
+group "com.mangocore"
+version '0.0.1-SNAPSHOT'
+description project.name
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+/*解决设置版本不起作用问题*/
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_1_8// 设置 JDK 版本
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {//指定java代码目录
+            srcDir "${rootProjectPath}${separator}src${separator}main${separator}java"
+            exclude "resources${separator}**"
+        }
+        resources {//指定资源目录
+            srcDir "${rootProjectPath}${separator}src${separator}main${separator}resources${separator}base"
+            srcDir "${rootProjectPath}${separator}src${separator}main${separator}resources${separator}${projectEnv}"
+        }
+    }
+    test {
+        java {//指定java代码目录
+            srcDir "${rootProjectPath}${separator}src${separator}test${separator}java"
+            exclude "resources${separator}**"
+        }
+        resources {//指定资源目录
+            srcDir "${rootProjectPath}${separator}src${separator}test${separator}resources"
+        }
+    }
+}
+
+/*依赖*/
+dependencies {
+    //compile 编译范围依赖在所有的classpath中可用，同时它们也会被打包。
+    //compileOnly 适用于编译期需要而打包时不需要的情况，java插件提供（gradle2.12时短暂的叫provided）
+    //providedCompile 编译、测试阶段需要依赖此类jar包，而运行阶段容器已经提供了相应的支持，所以无需将这些jar包打入war包，war插件提供（如：Servlet）
+    //providedRuntime 同proiveCompile类似。运行、测试的时候不需要，运行时需要，war插件提供
+    //runtime 运行、测试时所需的依赖,但编译时不需要。默认情况下，还包括编译时的依赖。
+    //testCompile  编译项目的测试源所需的依赖。默认情况下，还包括产品编译类和编译时的依赖。
+    //testRuntime  运行测试所需的依赖。默认情况下，还包括 编译，运行时和测试编译的依赖。
+    compile(
+            //防止包冲突
+            "org.slf4j:slf4j-api:1.7.25",
+            "cglib:cglib:3.2.5",
+            "org.json:json:20170516",
+
+            //日志方案选择slf4j与log4j2集成,注意别使用commons-logging与jdk-logging、log4j1、logback的集成原理
+            "com.lmax:disruptor:3.3.7",
+            "org.apache.logging.log4j:log4j-web:2.7",
+            "org.springframework.boot:spring-boot-starter-log4j2",
+
+            "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-undertow",
+            "org.springframework.boot:spring-boot-starter-thymeleaf",
+            "org.springframework.boot:spring-boot-starter-security",
+
+            "org.springframework.boot:spring-boot-starter-actuator",
+            "org.springframework.boot:spring-boot-starter-hateoas",
+            "org.springframework.boot:spring-boot-starter-aop",
+
+//                "org.springframework.boot:spring-boot-starter-validation",
+
+            //apache-Commons系列
+            "org.apache.commons:commons-lang3:3.6",
+            "org.apache.commons:commons-collections4:4.1",
+
+
+            //mysql驱动
+            "mysql:mysql-connector-java",
+            "org.springframework.boot:spring-boot-starter-jdbc",
+            "org.springframework.data:spring-data-commons",
+            //mysql数据源＋监控
+            "com.alibaba:druid:1.1.4",
+            //mybatis及对接Spring
+            "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1",
+            //mybatis 分页插件
+            "com.github.pagehelper:pagehelper:5.1.2",
+
+            //重试
+            "org.springframework.retry:spring-retry",
+            //http
+            "com.squareup.okhttp3:okhttp:3.9.0",
+            "com.squareup.okhttp3:mockwebserver:3.9.0",
+            "io.github.openfeign:feign-okhttp:9.5.1",
+            "io.github.openfeign:feign-slf4j:9.5.1",
+
+            "org.springframework.boot:spring-boot-starter-cache",
+            "com.github.ben-manes.caffeine:caffeine:2.5.6",
+
+            //excel处理
+            "javax.xml.bind:jaxb-api:2.3.0",
+
+            //JSON
+            "com.alibaba:fastjson:1.2.39",
+
+            //google的guava
+            "com.google.guava:guava:23.0",
+
+            //commons系列
+            "commons-codec:commons-codec",
+            "commons-io:commons-io:2.5",
+            "commons-fileupload:commons-fileupload:1.3.3"
+
+    )
+    compileOnly(
+            "org.projectlombok:lombok"
+    )
+    runtime(
+            "org.springframework.boot:spring-boot-devtools"
+    )
+
+    testCompile(
+            "org.springframework.boot:spring-boot-starter-test",
+            "org.springframework.security:spring-security-test"
+    )
+}
+
+/*依赖排除*/
+configurations {
+    //排除spring-boot-starter-web引入
+    all*.exclude module: "spring-boot-starter-tomcat"
+    all*.exclude module: "spring-boot-starter-logging"
+    all*.exclude module: "tomcat-jdbc"
+    all*.exclude group: "log4j", module: "log4j"
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: "org.slf4j", module: "slf4j-jdk14"
+    all*.exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
+    all*.exclude group: "org.slf4j", module: "slf4j-jcl"
+    all*.exclude group: "ch.qos.logback", module: "logback-classic"
+    all*.exclude group: "org.codehaus.jackson"
+}
+
+jar {
+    baseName = project.rootProject.name
+    version = ""//打包文件名不添加版本号
+    manifest {
+        attributes "Manifest-Version": project.version,
+                "Built-By": System.getProperty("user.name"),
+                "Built-Date": new Date().format("yyyy-MM-dd HH:mm:ss SSS"),
+                "description": project.description,
+                "Target-JDK": project.targetCompatibility,
+                "Built-Gradle": gradle.gradleVersion,
+                "Built-JDK": System.getProperty("java.version")
+    }
+}
+
+//docker生成image
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    dockerfile = file("${rootProjectPath}${separator}docker${separator}Dockerfile")
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
+
+//强制使用gradle
+task wrapper(type: Wrapper) {
+    gradleVersion = "4.3.1"
+}
+
+//增量编译
+tasks.withType(JavaCompile) {
+    options.incremental = true
+}
+
+//不自动下载依赖源码和javadoc
+idea {
+    module {
+        downloadJavadoc = false
+//            downloadSources = false
+    }
+}
+
+//清除out目录
+clean {
+    delete file("${rootProjectPath}${separator}out")
+}
