@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by notreami on 16/8/7.
@@ -107,6 +110,29 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(baFilter());
+    }
+
+
+    /**
+     * 替换默认线程池
+     *
+     * @return
+     */
+    @Bean
+    public Executor customExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(8);//核心线程数，默认为1
+        executor.setMaxPoolSize(100);//最大线程数，默认为Integer.MAX_VALUE
+        executor.setQueueCapacity(1000);//队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE
+        executor.setKeepAliveSeconds(60);//线程池维护线程所允许的空闲时间，默认为60s
+        executor.setThreadNamePrefix("taskExecutor-");
+
+        // rejection-policy：当pool已经达到max size的时候，如何处理新任务
+        // CALLER_RUNS：不在新线程中执行任务，而是有调用者所在的线程来执行
+        //线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
     }
 
 }
