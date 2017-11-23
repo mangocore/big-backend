@@ -1,9 +1,9 @@
 package com.mangocore.server.config.filter;
 
+import com.mangocore.common.common.CommonOutput;
 import com.mangocore.common.common.ErrorInfo;
-import com.mangocore.common.response.CommonResponse;
-import com.mangocore.data.util.JsonBinder;
-import com.mangocore.data.util.BasicAuth;
+import com.mangocore.common.util.JsonBinder;
+import com.mangocore.core.util.BasicAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +60,7 @@ public class BAInterceptor extends HandlerInterceptorAdapter {
         log.warn("BA failed: " + basicAuthData + " " + method + " " + uri);
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        response.getWriter().write(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.STATUS_INFO_ACCESS)));
+        response.getWriter().write(JsonBinder.toJSONString(CommonOutput.createError(ErrorInfo.STATUS_INFO_ACCESS)));
         response.getWriter().flush();
         response.getWriter().close();
         return false;

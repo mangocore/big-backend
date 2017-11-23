@@ -1,8 +1,8 @@
 package com.mangocore.server.config.sys;
 
+import com.mangocore.common.common.CommonOutput;
 import com.mangocore.common.common.ErrorInfo;
-import com.mangocore.common.response.CommonResponse;
-import com.mangocore.data.util.JsonBinder;
+import com.mangocore.common.util.JsonBinder;
 import com.mangocore.server.config.filter.AuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            response.getWriter().write(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.STATUS_INFO_ACCESS)));
+            response.getWriter().write(JsonBinder.toJSONString(CommonOutput.createError(ErrorInfo.STATUS_INFO_ACCESS)));
             response.getWriter().flush();
             response.getWriter().close();
         }
@@ -81,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            response.getWriter().write(JsonBinder.toJSONString(CommonResponse.createError(ErrorInfo.STATUS_INFO_AUTH)));
+            response.getWriter().write(JsonBinder.toJSONString(CommonOutput.createError(ErrorInfo.STATUS_INFO_AUTH)));
             response.getWriter().flush();
             response.getWriter().close();
         }

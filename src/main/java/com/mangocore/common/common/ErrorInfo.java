@@ -40,7 +40,7 @@ public class ErrorInfo {
      * 系统异常
      */
     public static final ErrorInfo SYS_INFO = new ErrorInfo(SYS_ERROR, "系统异常");
-
+    public static final ErrorInfo SYS_INFO_MAINTAINING = new ErrorInfo(SYS_ERROR_MAINTAINING, "系统维护中,请稍后在试!");
 
 
     public static final class ErrorCode {
@@ -72,6 +72,7 @@ public class ErrorInfo {
          * 系统异常
          */
         public static final int SYS_ERROR = 500; // 系统异常
+        public static final int SYS_ERROR_MAINTAINING = 501; // 系统异常(系统维护中)
 
     }
 

@@ -2,7 +2,7 @@ package com.mangocore.api;
 
 import com.google.common.collect.Maps;
 import com.mangocore.biz.service.SimpleService;
-import com.mangocore.common.response.CommonResponse;
+import com.mangocore.common.common.CommonOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ public class UnAuthTestController {
     private SimpleService simpleService;
 
     @GetMapping("/status/active")
-    public CommonResponse activeStatus() {
+    public CommonOutput activeStatus() {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
         String datetime = zonedDateTime.getZone().getDisplayName(TextStyle.FULL, Locale.ROOT)
                 + "(" + zonedDateTime.getZone().getDisplayName(TextStyle.SHORT, Locale.ROOT) + ")  "
@@ -43,7 +43,7 @@ public class UnAuthTestController {
         objectMap.put("服务器时区", datetime);
         objectMap.put("数据库连接测试", simpleService.selectSimpleDomainByAll());
         objectMap.put("数据库日期", simpleService.selectSysDate());
-        return CommonResponse.createSuccess(objectMap);
+        return CommonOutput.createSuccess(objectMap);
     }
 
 }
