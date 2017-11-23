@@ -15,8 +15,7 @@ import com.mangocore.core.bpm.execute.LogicExecutor;
  * Created by notreami on 17/11/22.
  */
 public abstract class ProcessInstance<IN extends BaseInput, OUT> implements ProcessDefinition, ProcessTypeIdentify, ProcessEvent {
-
-    protected LogicExecutor<IN, OUT> executor = new LogicExecutor<>();
+    protected static LogicExecutor executor = new LogicExecutor<>();
 
     @Override
     public CommonOutput process(CommonInput commonInput) {

@@ -11,6 +11,11 @@ management:
     enabled: true
 
 spring:
+  cache:
+    type: caffeine
+  mvc:
+    favicon:
+      enabled: false
   profiles:
     active: dev
   thymeleaf:
@@ -18,8 +23,6 @@ spring:
     enabled: true
     encoding: UTF-8
     mode: HTML5
-  cache:
-    type: caffeine
 
 server:
   port: 29368
