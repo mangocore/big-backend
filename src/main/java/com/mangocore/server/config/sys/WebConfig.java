@@ -3,6 +3,7 @@ package com.mangocore.server.config.sys;
 import com.google.common.collect.Lists;
 import com.mangocore.common.util.JsonBinder;
 import com.mangocore.server.config.filter.BAInterceptor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -28,7 +30,24 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
-     * 返回字符编码
+     * 请求字符编码
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean characterEncodingFilterRegistration() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+
+        FilterRegistrationBean reg = new FilterRegistrationBean();
+        reg.setFilter(filter);
+        reg.addUrlPatterns("/*");
+        return reg;
+    }
+
+    /**
+     * 响应字符编码
      *
      * @return
      */

@@ -1,6 +1,7 @@
 package com.mangocore.common.common;
 
 import com.mangocore.common.util.JsonBinder;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Created by notreami on 17/11/23.
  */
-@Slf4j
+
 @Data
+@Slf4j
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

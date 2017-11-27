@@ -3,6 +3,8 @@ package com.mangocore.common.common;
 import com.mangocore.common.enums.OperatorType;
 import com.mangocore.common.enums.ProcessType;
 import com.mangocore.common.util.JsonBinder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,27 +20,21 @@ import org.apache.commons.lang3.StringUtils;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "统一输入模型", description = "统一输入模型")
 public class CommonInput<T extends BaseInput> {
 
-    /**
-     * 调用方信息
-     */
+    @ApiModelProperty(value = "调用方信息")
     private ClientInfo clientInfo;
-    /**
-     * 订单操作类型
-     */
+
+    @ApiModelProperty(value = "操作类型")
     private ProcessType processType;
     /**
-     * 操作人类型
+     *
      */
+    @ApiModelProperty(value = "操作人类型")
     private OperatorType operatorType;
 
-    /**
-     * 操作人
-     * 用户:userId
-     * 商家: 登录用户名/账号/联系人 等
-     * 客服: 客服编号
-     */
+    @ApiModelProperty(value = "操作人(用户:userId；商家: 登录用户名/账号/联系人 等；客服: 客服编号)")
     private String operator;
 
     /**

@@ -1,39 +1,29 @@
-package com.mangocore.server.config.filter;
+package com.mangocore.sal.db.config;
 
+import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
 import com.mangocore.sal.db.mapper.SimpleMapper;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
- * 全局拦截配置
- * Created by notreami on 16/8/7.
+ * Created by notreami on 17/11/27.
  */
 @Configuration
-public class FilterConfig {
+public class DruidConfig {
 
-    /**
-     * 传入数据字符集编码
-     *
-     * @return
-     */
-    @Bean
-    public FilterRegistrationBean characterEncodingFilterRegistration() {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
+    @Value("${security.user.name}")
+    private String loginUsername;
+    @Value("${security.user.password}")
+    private String loginPassword;
 
-        FilterRegistrationBean reg = new FilterRegistrationBean();
-        reg.setFilter(filter);
-        reg.addUrlPatterns("/*");
-        return reg;
-    }
 
     /**
      * druidWeb监控
@@ -80,4 +70,20 @@ public class FilterConfig {
         return new DefaultPointcutAdvisor(druidStatPointcut(), druidStatInterceptor());
     }
 
+    /**
+     * druid Servlet
+     *
+     * @return
+     */
+    @Bean
+    public ServletRegistrationBean druidServletRegistrationBean() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+        servletRegistrationBean.setServlet(new StatViewServlet());
+        servletRegistrationBean.addUrlMappings("/druid/*");
+        servletRegistrationBean.addInitParameter("loginUsername", loginUsername);// 用户名
+        servletRegistrationBean.addInitParameter("loginPassword", loginPassword);// 密码
+        servletRegistrationBean.addInitParameter("profileEnable", "true");//监控单个url调用的sql列表
+        servletRegistrationBean.addInitParameter("resetEnable", "false");// 禁用HTML页面上的“Reset All”功能
+        return servletRegistrationBean;
+    }
 }
