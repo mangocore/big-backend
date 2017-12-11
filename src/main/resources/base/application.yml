@@ -7,10 +7,21 @@ logging:
 
 management:
   context-path: /projectManage
+  port: 34613
   security:
     enabled: true
+  shell:
+    ssh:
+      enabled: false
+    telnet:
+      enabled: false
 
 spring:
+  aop:
+    auto: true
+    proxy-target-class: false  #基于标准的基于Java接口的代理
+  cache:
+    type: caffeine
   http:
     encoding:
       charset: UTF-8
@@ -18,13 +29,15 @@ spring:
       force: true
       force-request: true
       force-response: true
-  aop:
-    auto: true
-    proxy-target-class: false  #基于标准的基于Java接口的代理
-  cache:
-    type: caffeine
+    multipart:
+      enabled: true
+      max-file-size: 1MB
+      max-request-size: 10MB
   mvc:
     favicon:
+      enabled: false
+  metrics:
+    export:
       enabled: false
   profiles:
     active: dev
@@ -33,15 +46,26 @@ spring:
     enabled: true
     encoding: UTF-8
     mode: HTML5
+  session:
+    store-type: none
+  webservices:
+    path: /
+  transaction:
+    default-timeout: 10000
+    rollback-on-commit-failure: true
+
 
 server:
   port: 29368
-  context-path: /
   connection-timeout: 10000
-  session:
-    timeout: 30  #session最大超时时间(分钟)，默认为30
+  context-path: /  #应用程序的上下文路径。
+  display-name: "big-backend"
   error:
-    path: /error #错误页，指定发生错误时，跳转的URL
+      path: /error #错误页，指定发生错误时，跳转的URL
+      whitelabel:
+        enabled: true #在服务器发生错误的情况下，启用浏览器中显示的默认错误页面。
+  servlet-path: /  #主调度程序servlet的路径。
+  use-forward-headers: true #如果X-Forwarded- *头应该应用于HttpRequest。
   tomcat:
     accesslog:
       directory: /opt/logs/mangocore/bigbackend/access
@@ -57,7 +81,6 @@ server:
     protocol-header: "X-Forwarded-Proto" #nginx  proxy_set_header X-Forwarded-Proto $scheme;
     remote-ip-header: "X-Forwarded-For"  #nginx  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     uri-encoding: UTF-8
-  use-forward-headers: true
 
 security:
   basic:

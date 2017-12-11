@@ -16,6 +16,6 @@ public interface SimpleMapper {
 
     List<SimpleDomain> selectSimpleDomainByAll();
 
-    @Select("SELECT SYSDATE() FROM DUAL")
+    @Select("SELECT SYSDATE()")
     Date selectSysDate();
 }
