@@ -21,7 +21,7 @@
         <!--9配置默认的执行器。SIMPLE 就是普通的执行器；REUSE 执行器会重用预处理语句（prepared statements）； BATCH 执行器将重用语句并执行批量更新-->
         <setting name="defaultExecutorType" value="SIMPLE"/>
         <!--10设置超时时间，它决定驱动等待数据库响应的秒数-->
-        <setting name="defaultStatementTimeout" value="30000"/>
+        <setting name="defaultStatementTimeout" value="10000"/>
         <!--11设置驱动控制获取返回结果的大小。这个参数值可以覆盖一个查询设置-->
         <!--<setting name="defaultFetchSize" value="null"/>-->
         <!--12允许在嵌套语句中使用分页（RowBounds）。 If allow, set the false-->

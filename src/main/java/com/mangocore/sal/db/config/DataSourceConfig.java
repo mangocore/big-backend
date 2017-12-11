@@ -68,10 +68,21 @@ public class DataSourceConfig {
 //        p.setRemoveAbandoned(true);//清除未归还（removeAbandonedTimeout）的连接。默认值是false
 //        p.setSuspectTimeout(10);//超时未归还连接池的连接则关闭。默认值是0
 //        p.setLogAbandoned(false);//是否打印RemoveAbandoned的日志。默认值是false
+
         /*
-         * 连接超时3秒，读写超时5秒
+         * 建立新连接时将发送到JDBC驱动程序的连接属性。字符串的格式必须是[propertyName = property;]
          */
-        p.setConnectionProperties("connectTimeout=3000;socketTime=10000");//建立新连接时将发送到JDBC驱动程序的连接属性。字符串的格式必须是[propertyName = property;]
+        p.setConnectionProperties(StringUtils.join(Arrays.asList(
+                "useJDBCCompliantTimezoneShift=true",
+                "useLegacyDatetimeCode=false",
+                "serverTimezone=GMT+8",
+                "useUnicode=true",
+                "characterEncoding=UTF-8",
+                "useSSL=false",
+                "zeroDateTimeBehavior=convertToNull",
+                "connectTimeout=3000",
+                "socketTime=10000"
+        ), ";"));
 
         /*
          * 插件
