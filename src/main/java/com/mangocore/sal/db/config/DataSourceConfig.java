@@ -81,7 +81,7 @@ public class DataSourceConfig {
                 "useSSL=false",
                 "zeroDateTimeBehavior=convertToNull",
                 "connectTimeout=3000",
-                "socketTime=10000"
+                "socketTimeout=10000"
         ), ";"));
 
         /*
