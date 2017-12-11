@@ -11,6 +11,16 @@ management:
     enabled: true
 
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      force-request: true
+      force-response: true
+  aop:
+    auto: true
+    proxy-target-class: false  #基于标准的基于Java接口的代理
   cache:
     type: caffeine
   mvc:
@@ -27,20 +37,27 @@ spring:
 server:
   port: 29368
   context-path: /
-  undertow:
-    accesslog:
-      enabled: true
-      pattern: "%t %I %q ‘%{i,X-Real-IP}/%a' %l %u %v '%r' %s '%b/%{o,Content-Length}' '%{o,Content-Type}' '%{i,User-Agent}' '%{i,Referer}'"
-      dir: /opt/logs/mangocore/bigbackend/access
-      rotate: true
-    buffer-size: 1024
-    direct-buffers: true
-    io-threads: 2
-    worker-threads: 20
+  connection-timeout: 10000
   session:
-    timeout: 60  # session最大超时时间(分钟)，默认为30
+    timeout: 30  #session最大超时时间(分钟)，默认为30
   error:
-    path: /error  # 错误页，指定发生错误时，跳转的URL
+    path: /error #错误页，指定发生错误时，跳转的URL
+  tomcat:
+    accesslog:
+      directory: /opt/logs/mangocore/bigbackend/access
+      enabled: true
+      # 访问时间 线程名 '本机IP:端口/远程主机的IP:端口' '请求方式 请求路径 请求协议'  HTTP状态码  '处理请求所耗费的毫秒数/秒数' '发送字节数' '内容类型'
+      pattern: "%t %I '%A:%p/%a:%p' '%m %U %H' %s '%D ms=%T s' '%b/%B/%{Content-Length}o' '%{Content-Type}o' '%{User-Agent}i' '%{Referer}i'"
+      request-attributes-enabled: true
+    max-threads: 20  #tomcat起动的最大线程数，即同时处理的任务个数，默认值为200
+    max-connections: 18 #Tomcat一瞬间最多能够处理的并发连接数
+    accept-count: 20 #当tomcat起动的线程数达到最大时，接受排队的请求个数，默认值为100
+    max-http-post-size: 2048  #HTTP发布或放置内容的最大大小（以字节为单位）
+    port-header: "X-Forwarded-Port"   #nginx   proxy_set_header X-Forwarded-Port $server_port;
+    protocol-header: "X-Forwarded-Proto" #nginx  proxy_set_header X-Forwarded-Proto $scheme;
+    remote-ip-header: "X-Forwarded-For"  #nginx  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    uri-encoding: UTF-8
+  use-forward-headers: true
 
 security:
   basic:

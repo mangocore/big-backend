@@ -1,6 +1,5 @@
 package com.mangocore.sal.db.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.mangocore.sal.db.domain.SimpleDomain;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -23,11 +23,10 @@ import java.sql.SQLException;
  * Created by notreami on 16/8/15.
  */
 @Configuration
+@EnableTransactionManagement
 @MapperScan(sqlSessionTemplateRef = "sqlSessionTemplate", basePackages = "com.mangocore.sal.db.mapper")
 public class MybatisConfig {
     //数据库连接相关的参数：
-    @Value("${custom.datasource.name}")
-    private String name;
     @Value("${custom.datasource.driver-class-name}")
     private String driverClassName;
     @Value("${custom.datasource.jdbc-url}")
@@ -36,10 +35,12 @@ public class MybatisConfig {
     private String userName;
     @Value("${custom.datasource.password}")
     private String password;
+    @Value("${custom.datasource.initialSize}")
+    private int initialSize;
 
-    @Bean(name = "dataSource", destroyMethod = "close")
-    public DruidDataSource dataSource() throws SQLException {
-        return DataSourceConfig.getDruidDataSource(name, driverClassName, jdbcUrl, userName, password);
+    @Bean(name = "dataSource")
+    public DataSource dataSource() throws SQLException {
+        return DataSourceConfig.getTomcatDataSource(driverClassName, jdbcUrl, userName, password, initialSize);
     }
 
     @Bean(name = "sqlSessionFactory")

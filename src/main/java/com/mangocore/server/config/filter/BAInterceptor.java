@@ -21,6 +21,9 @@ import java.io.IOException;
  */
 @Slf4j
 public class BAInterceptor extends HandlerInterceptorAdapter {
+
+    private static final String BASE_PATH = "/api/";
+
     @Value("${custom.mws_client_id}")
     private String client_id;
     @Value("${custom.mws_client_secret}")
@@ -30,7 +33,7 @@ public class BAInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         final String path = request.getRequestURI();
 
-        if (!StringUtils.startsWith(path, "/api/")) {
+        if (!StringUtils.startsWith(path, BASE_PATH)) {
             return true;
         }
         //测试环境可方便调试

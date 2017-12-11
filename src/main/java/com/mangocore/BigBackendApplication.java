@@ -12,9 +12,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.autoconfigure.session.SessionAutoConfiguration;
 import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
 import org.springframework.boot.autoconfigure.websocket.WebSocketMessagingAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,11 +30,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         DataSourceTransactionManagerAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class,
         MongoAutoConfiguration.class, MongoDataAutoConfiguration.class,
-        EmbeddedMongoAutoConfiguration.class, MongoRepositoriesAutoConfiguration.class})
+        EmbeddedMongoAutoConfiguration.class, MongoRepositoriesAutoConfiguration.class,
+        SessionAutoConfiguration.class})
 @Slf4j
 @EnableAsync
 @EnableRetry
 @EnableScheduling
+@EnableAspectJAutoProxy
 @ServletComponentScan
 public class BigBackendApplication {
 

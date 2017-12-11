@@ -21,17 +21,20 @@ import java.util.List;
  * 请求拦截（token），过滤出账户锁定用户,匿名用户
  * Created by notreami on 17/10/29.
  */
-public class AuthenticationFilter  extends GenericFilterBean {
+public class AuthenticationFilter extends GenericFilterBean {
+
+    private static final String BASE_PATH = "/api/";
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        final String path = ((HttpServletRequest)servletRequest).getRequestURI();
+        final String path = ((HttpServletRequest) servletRequest).getRequestURI();
 
-        if (StringUtils.startsWith(path, "/api/")) {
+        if (StringUtils.startsWith(path, BASE_PATH)) {
             //        Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest)request);
 
             List<GrantedAuthority> authorities = Lists.newArrayList();
-            authorities.add( new SimpleGrantedAuthority("ROLE_ADMIN") );
-            authorities.add( new SimpleGrantedAuthority("AUTH_WRITE") );
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("AUTH_WRITE"));
             // 生成令牌
             Authentication authentication = new PreAuthenticatedAuthenticationToken("admin", "123456", authorities);
 
@@ -39,6 +42,6 @@ public class AuthenticationFilter  extends GenericFilterBean {
         }
 
 
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }
